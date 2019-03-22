@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">PostsTest</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="post_details_comment_title">Comments</string>
+    <string name="post_details_desc_title">Description</string>
+    <string name="post_details_user_title">User</string>
+    <string name="post_details_lorem">lkacnkdjsbcksdbcskhvbskhvbskvhsfbkvhsbvkhsvbksh</string>
+    <string name="post_detail_username">Name:</string>
+    <string name="post_detail_user_email">Email:</string>
+    <string name="post_details_user_phone">Phone:</string>
+    <string name="post_details_user_web">Website:</string>
+</resources>

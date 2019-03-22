@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#26C476</color>
+    <color name="colorPrimaryDark">#009249</color>
+    <color name="colorAccent">#FFFFFF</color>
+
+    <color name="redButton">#D32F2F</color>
+    <color name="badgeColor">#06A6E4</color>
+    <color name="silver">#CCCCCC</color>
+</resources>
