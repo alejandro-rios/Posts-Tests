@@ -1,7 +1,8 @@
-package com.alejandrorios.poststest;
+package com.alejandrorios.poststest.ui.postDetails;
 
 import com.alejandrorios.poststest.models.Comment;
 import com.alejandrorios.poststest.models.Post;
+import com.alejandrorios.poststest.models.PostRealm;
 import com.alejandrorios.poststest.models.User;
 
 import java.util.List;
@@ -9,9 +10,9 @@ import java.util.List;
 public interface PostDetailsView {
 	interface Presenter {
 
-		void fetchPostData(Post post);
+		void fetchPostData(PostRealm post);
 
-		void markAsFavorite();
+		void markAsFavorite(PostRealm post);
 
 	}
 
@@ -39,5 +40,5 @@ public interface PostDetailsView {
 
 	void showProgress(boolean show);
 
-	void fillData(Post post, User user, List<Comment> comment);
+	void fillData(PostRealm post, User user, List<Comment> comment);
 }

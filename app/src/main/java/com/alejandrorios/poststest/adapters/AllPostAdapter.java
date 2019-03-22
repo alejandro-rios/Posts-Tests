@@ -4,15 +4,14 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alejandrorios.poststest.R;
-import com.alejandrorios.poststest.models.Post;
+import com.alejandrorios.poststest.models.PostRealm;
+import com.alejandrorios.poststest.utils.ConfirmationDialog;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 
@@ -20,20 +19,22 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostHolder> {
+public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.PostHolder> {
 	public interface Delegate {
-		void onItemClicked(final Post post);
+		void onItemClicked(PostRealm post);
+
+		void deletePost(PostRealm post);
 	}
 
 	private Context context;
-	private List<Post> postList;
+	private List<PostRealm> postList;
 	private RecyclerView recyclerView = null;
 	private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
+	private ConfirmationDialog dialog;
 	private Delegate delegate;
 
-	public PostListAdapter(final Context context, final List<Post> postList) {
+	public AllPostAdapter(final Context context, final List<PostRealm> postList) {
 		this.context = context;
 		this.postList = postList;
 		viewBinderHelper.setOpenOnlyOne(true);
@@ -55,18 +56,33 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostHo
 
 	@Override
 	public void onBindViewHolder(@NonNull final PostHolder holder, final int position) {
-		final int adapterPosition = holder.getAdapterPosition();
-		final Post post = postList.get(position);
+		final PostRealm post = postList.get(position);
 
-		viewBinderHelper.bind(holder.swipeRevealLayout, post.getId());
+		viewBinderHelper.bind(holder.srlAll, post.getId());
 		holder.postTitle.setText(post.getTitle());
-		holder.postBadge.setVisibility(position <= 19 ? View.VISIBLE : View.INVISIBLE);
-		holder.postStar.setVisibility(View.VISIBLE);
+		holder.postBadge.setVisibility(post.isRead() ? View.VISIBLE : View.INVISIBLE);
+		holder.postStar.setVisibility(post.isFavorite() ? View.VISIBLE : View.INVISIBLE);
 
 		holder.lytItem.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				delegate.onItemClicked(post);
+			}
+		});
+
+		holder.postDelete.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (dialog == null) {
+					dialog = new ConfirmationDialog(context);
+//					dialog.setDelegate(presenter);
+				}
+
+				dialog.show(R.string.dialog_delete_post_message);
+				TransitionManager.beginDelayedTransition(recyclerView);
+				delegate.deletePost(post);
+				postList.remove(position);
+				notifyItemRemoved(position);
 			}
 		});
 	}
@@ -84,10 +100,12 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostHo
 		View postBadge;
 		@BindView(R.id.postStar)
 		View postStar;
-		@BindView(R.id.swipeRevealLayout)
-		SwipeRevealLayout swipeRevealLayout;
+		@BindView(R.id.srlAll)
+		SwipeRevealLayout srlAll;
 		@BindView(R.id.lytItem)
 		View lytItem;
+		@BindView(R.id.postDelete)
+		View postDelete;
 
 		public PostHolder(final View itemView) {
 			super(itemView);
@@ -116,11 +134,6 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostHo
 
 		public void setPostStar(View postStar) {
 			this.postStar = postStar;
-		}
-
-		@OnClick(R.id.postDelete)
-		void deletePost() {
-			Log.wtf("Adapter", "Click example");
 		}
 	}
 

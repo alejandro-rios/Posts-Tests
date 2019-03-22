@@ -1,4 +1,4 @@
-package com.alejandrorios.poststest;
+package com.alejandrorios.poststest.ui.postDetails;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -14,9 +14,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alejandrorios.poststest.R;
 import com.alejandrorios.poststest.adapters.PostCommentsAdapter;
 import com.alejandrorios.poststest.models.Comment;
-import com.alejandrorios.poststest.models.Post;
+import com.alejandrorios.poststest.models.PostRealm;
 import com.alejandrorios.poststest.models.User;
 import com.alejandrorios.poststest.service.api.GetPostComments;
 import com.alejandrorios.poststest.service.api.GetUserData;
@@ -55,6 +56,7 @@ public class PostDetails extends AppCompatActivity implements PostDetailsView {
 
 	private PostCommentsAdapter commentsAdapter;
 	private PostDetailsPresenter presenter;
+	private PostRealm postData = new PostRealm();
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
@@ -62,7 +64,6 @@ public class PostDetails extends AppCompatActivity implements PostDetailsView {
 		setContentView(R.layout.activity_post_details);
 		ButterKnife.bind(this);
 		final Bundle arguments = getIntent().getExtras();
-		Post postData = new Post();
 
 		try {
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -73,8 +74,7 @@ public class PostDetails extends AppCompatActivity implements PostDetailsView {
 
 		if (arguments != null) {
 			final Gson gson = new Gson();
-			postData = gson.fromJson(getIntent().getStringExtra("post"), Post.class);
-
+			postData = gson.fromJson(getIntent().getStringExtra("post"), PostRealm.class);
 		}
 
 		presenter = new PostDetailsPresenter(this, new GetUserData(), new GetPostComments());
@@ -82,7 +82,7 @@ public class PostDetails extends AppCompatActivity implements PostDetailsView {
 	}
 
 	@Override
-	public void fillData(final Post post, final User user, final List<Comment> comments) {
+	public void fillData(final PostRealm post, final User user, final List<Comment> comments) {
 		postContent.setText(post.getBody());
 		userName.setText(String.format("%s %s", getResources().getString(R.string.post_detail_username), user.getName()));
 		userEmail.setText(String.format("%s %s", getResources().getString(R.string.post_detail_user_email), user.getEmail()));
@@ -112,7 +112,7 @@ public class PostDetails extends AppCompatActivity implements PostDetailsView {
 		final int id = item.getItemId();
 
 		if (id == R.id.action_favorite) {
-			presenter.markAsFavorite();
+			presenter.markAsFavorite(postData);
 			Toast.makeText(this, "Marked as favorite", Toast.LENGTH_SHORT).show();
 			return true;
 		}

@@ -3,11 +3,13 @@ package com.alejandrorios.poststest.models;
 import com.alejandrorios.poststest.utils.RealmManager;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Post {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class PostRealm extends RealmObject {
+	@PrimaryKey
 	@SerializedName("id")
 	private String id;
 	@SerializedName("userId")
@@ -16,6 +18,8 @@ public class Post {
 	private String title;
 	@SerializedName("body")
 	private String body;
+	private boolean isRead;
+	private boolean isFavorite;
 
 	public String getId() {
 		return id;
@@ -49,26 +53,24 @@ public class Post {
 		this.body = body;
 	}
 
-	private PostRealm saveToRealm() {
-		final PostRealm postRealm = new PostRealm();
-		final int idPost = Integer.parseInt(id);
-
-		postRealm.setId(id);
-		postRealm.setBody(body);
-		postRealm.setTitle(title);
-		postRealm.setUserId(userId);
-		postRealm.setRead(idPost <= 20);
-		postRealm.setFavorite(false);
-		return postRealm;
+	public boolean isRead() {
+		return isRead;
 	}
 
-	public static List<PostRealm> savePostsListToRealm(final List<Post> posts) {
-		List<PostRealm> postRealms = new ArrayList<>();
-		for (Post post : posts) {
-			postRealms.add(post.saveToRealm());
-		}
-		RealmManager.getInstance().saveList(postRealms, PostRealm.class);
+	public void setRead(boolean read) {
+		isRead = read;
+	}
 
-		return postRealms;
+	public boolean isFavorite() {
+		return isFavorite;
+	}
+
+	public void setFavorite(boolean favorite) {
+		isFavorite = favorite;
+	}
+
+	public static List<PostRealm> getPostsInDatabase(){
+		return RealmManager.getInstance().getRealmInstance().where(PostRealm.class)
+				.findAll();
 	}
 }

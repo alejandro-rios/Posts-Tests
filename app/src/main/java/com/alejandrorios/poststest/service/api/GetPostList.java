@@ -2,7 +2,8 @@ package com.alejandrorios.poststest.service.api;
 
 import android.util.Log;
 
-import com.alejandrorios.poststest.fragments.AllPostsFragmentView;
+import com.alejandrorios.poststest.models.PostRealm;
+import com.alejandrorios.poststest.ui.allPosts.AllPostsFragmentView;
 import com.alejandrorios.poststest.models.Post;
 import com.alejandrorios.poststest.service.network.RetrofitProvider;
 import com.alejandrorios.poststest.service.network.RetrofitProviderImpl;
@@ -25,7 +26,8 @@ public class GetPostList implements AllPostsFragmentView.GetPostInteractor {
 		call.enqueue(new Callback<List<Post>>() {
 			@Override
 			public void onResponse(@NotNull final Call<List<Post>> call, @NotNull final Response<List<Post>> response) {
-				onFinishedListener.onFinished(response.body());
+				final List<PostRealm> realmPosts = Post.savePostsListToRealm(response.body());
+				onFinishedListener.onFinished(realmPosts);
 
 			}
 

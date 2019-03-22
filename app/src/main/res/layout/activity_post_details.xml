@@ -44,7 +44,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
-            android:paddingTop="10dp"
             android:paddingEnd="16dp"
             android:paddingBottom="10dp"
             android:text="@string/post_details_lorem"
@@ -67,7 +66,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
-            android:paddingTop="10dp"
             android:paddingEnd="16dp"
             android:paddingBottom="10dp"
             android:text="@string/post_detail_username"
@@ -102,7 +100,7 @@
             android:paddingStart="16dp"
             android:paddingTop="10dp"
             android:paddingEnd="16dp"
-            android:paddingBottom="10dp"
+            android:paddingBottom="16dp"
             android:text="@string/post_details_user_web"
             android:textSize="15sp" />
 

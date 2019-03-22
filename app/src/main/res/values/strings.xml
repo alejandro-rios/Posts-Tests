@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">PostsTest</string>
     <string name="action_refresh">Refresh</string>
+
     <string name="post_details_comment_title">Comments</string>
     <string name="post_details_desc_title">Description</string>
     <string name="post_details_user_title">User</string>
@@ -9,4 +10,12 @@
     <string name="post_detail_user_email">Email:</string>
     <string name="post_details_user_phone">Phone:</string>
     <string name="post_details_user_web">Website:</string>
+
+    <string name="fragment_favorites_empty">No favorites saved</string>
+
+    <string name="dialog_confirm_title">Are You Sure?</string>
+    <string name="dialog_delete_message">You really want to delete all the posts?</string>
+    <string name="dialog_delete_post_message">You really want to delete this post?</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_confirm">Ok</string>
 </resources>

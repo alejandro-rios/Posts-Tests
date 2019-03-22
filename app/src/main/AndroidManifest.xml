@@ -5,15 +5,17 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".PostsTestApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +24,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PostDetails" />
+            android:name=".ui.postDetails.PostDetails"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -43,7 +43,6 @@ public class PostCommentsAdapter extends RecyclerView.Adapter<PostCommentsAdapte
 
 	@Override
 	public void onBindViewHolder(@NonNull final CommentHolder holder, final int position) {
-		final int adapterPosition = holder.getAdapterPosition();
 		final Comment comment = commentList.get(position);
 
 		holder.comment.setText(comment.getBody());

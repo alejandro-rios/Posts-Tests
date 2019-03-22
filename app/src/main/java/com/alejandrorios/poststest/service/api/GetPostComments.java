@@ -2,7 +2,7 @@ package com.alejandrorios.poststest.service.api;
 
 import android.util.Log;
 
-import com.alejandrorios.poststest.PostDetailsView;
+import com.alejandrorios.poststest.ui.postDetails.PostDetailsView;
 import com.alejandrorios.poststest.models.Comment;
 import com.alejandrorios.poststest.service.network.RetrofitProvider;
 import com.alejandrorios.poststest.service.network.RetrofitProviderImpl;

@@ -1,4 +1,4 @@
-package com.alejandrorios.poststest.fragments;
+package com.alejandrorios.poststest.ui.allPosts;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -19,9 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.alejandrorios.poststest.R;
-import com.alejandrorios.poststest.adapters.PostListAdapter;
-import com.alejandrorios.poststest.models.Post;
+import com.alejandrorios.poststest.adapters.AllPostAdapter;
+import com.alejandrorios.poststest.models.PostRealm;
 import com.alejandrorios.poststest.service.api.GetPostList;
+import com.alejandrorios.poststest.utils.ConfirmationDialog;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,10 +34,11 @@ import butterknife.OnClick;
 
 public class AllPostsFragment extends Fragment implements AllPostsFragmentView {
 
-	private List<Post> list;
-	private PostListAdapter postsAdapter;
+	private List<PostRealm> list;
+	private AllPostAdapter postsAdapter;
 	private AllPostsFragmentPresenter presenter;
 	private Context context;
+	private ConfirmationDialog deleteDialog;
 
 	@BindView(R.id.pbPost)
 	View pbPost;
@@ -67,7 +69,6 @@ public class AllPostsFragment extends Fragment implements AllPostsFragmentView {
 	public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		presenter = new AllPostsFragmentPresenter(context, this, new GetPostList());
-		presenter.getPostList();
 	}
 
 	@Override
@@ -81,6 +82,7 @@ public class AllPostsFragment extends Fragment implements AllPostsFragmentView {
 		final int id = item.getItemId();
 
 		if (id == R.id.action_refresh) {
+			clearPosts();
 			presenter.getPostList();
 			return true;
 		}
@@ -90,23 +92,36 @@ public class AllPostsFragment extends Fragment implements AllPostsFragmentView {
 
 	@OnClick(R.id.fabDelete)
 	void onClickFab(final View view) {
-		list.clear();
-		postsAdapter.notifyDataSetChanged();
+		if (deleteDialog == null) {
+			deleteDialog = new ConfirmationDialog(context);
+			deleteDialog.setDelegate(presenter);
+		}
 
-		Snackbar.make(view, "Posts cleaned!!", Snackbar.LENGTH_SHORT)
-				.setAction("Action", null).show();
+		deleteDialog.show(R.string.dialog_delete_message);
 	}
 
 	@Override
-	public void setupPostList(final List<Post> postList) {
+	public void onStart() {
+		super.onStart();
+		presenter.getPostList();
+	}
+
+	@Override
+	public void setupPostList(final List<PostRealm> postList) {
 		list = postList;
-		postsAdapter = new PostListAdapter(context, list);
+		postsAdapter = new AllPostAdapter(context, list);
 		final LinearLayoutManager llm = new LinearLayoutManager(context);
 		llm.setOrientation(LinearLayoutManager.VERTICAL);
 		rvPostList.setLayoutManager(llm);
 		rvPostList.addItemDecoration(new DividerItemDecoration(context, LinearLayoutManager.VERTICAL));
 		rvPostList.setAdapter(postsAdapter);
 		postsAdapter.setDelegate(presenter);
+	}
+
+	@Override
+	public void clearPosts() {
+		list.clear();
+		postsAdapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -128,4 +143,6 @@ public class AllPostsFragment extends Fragment implements AllPostsFragmentView {
 			}
 		});
 	}
+
+
 }

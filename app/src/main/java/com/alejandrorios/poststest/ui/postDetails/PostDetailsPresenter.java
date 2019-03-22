@@ -1,17 +1,18 @@
-package com.alejandrorios.poststest;
+package com.alejandrorios.poststest.ui.postDetails;
 
 import com.alejandrorios.poststest.models.Comment;
-import com.alejandrorios.poststest.models.Post;
+import com.alejandrorios.poststest.models.PostRealm;
 import com.alejandrorios.poststest.models.User;
+import com.alejandrorios.poststest.utils.RealmManager;
 
 import java.util.List;
 
-public class PostDetailsPresenter implements PostDetailsView.Presenter, PostDetailsView.GetUserInteractor.OnFinishedListener, PostDetailsView.GetCommentsInteractor.OnFinishedListener{
+public class PostDetailsPresenter implements PostDetailsView.Presenter, PostDetailsView.GetUserInteractor.OnFinishedListener, PostDetailsView.GetCommentsInteractor.OnFinishedListener {
 
 	private final PostDetailsView view;
 	private final PostDetailsView.GetUserInteractor userInteractor;
 	private final PostDetailsView.GetCommentsInteractor commentsInteractor;
-	private Post postData;
+	private PostRealm postData;
 	private User userData;
 
 	public PostDetailsPresenter(final PostDetailsView view, final PostDetailsView.GetUserInteractor userInteractor, final PostDetailsView.GetCommentsInteractor commentsInteractor) {
@@ -21,15 +22,17 @@ public class PostDetailsPresenter implements PostDetailsView.Presenter, PostDeta
 	}
 
 	@Override
-	public void fetchPostData(final Post post) {
+	public void fetchPostData(final PostRealm post) {
 		postData = post;
 		view.showProgress(true);
 		userInteractor.getUserData(postData.getUserId(), this);
 	}
 
 	@Override
-	public void markAsFavorite() {
-
+	public void markAsFavorite(final PostRealm post) {
+		post.setRead(false);
+		post.setFavorite(true);
+		RealmManager.getInstance().update(post);
 	}
 
 	@Override
