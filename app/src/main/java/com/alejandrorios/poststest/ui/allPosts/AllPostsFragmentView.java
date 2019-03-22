@@ -8,6 +8,8 @@ import java.util.List;
 public interface AllPostsFragmentView {
 	interface Presenter extends AllPostAdapter.Delegate {
 		void getPostList();
+
+		void deleteAllPost();
 	}
 
 	interface GetPostInteractor {
@@ -24,6 +26,10 @@ public interface AllPostsFragmentView {
 	void showProgress(boolean show);
 
 	void setupPostList(List<PostRealm> postList);
+
+	void showMsg(boolean show);
+
+	void updatePostList();
 
 	void clearPosts();
 }

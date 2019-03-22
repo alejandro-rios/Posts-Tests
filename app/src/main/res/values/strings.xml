@@ -12,10 +12,12 @@
     <string name="post_details_user_web">Website:</string>
 
     <string name="fragment_favorites_empty">No favorites saved</string>
+    <string name="fragment_all_posts_empty">No Posts loaded</string>
+    <string name="network_error">No favorites saved</string>
 
     <string name="dialog_confirm_title">Are You Sure?</string>
-    <string name="dialog_delete_message">You really want to delete all the posts?</string>
-    <string name="dialog_delete_post_message">You really want to delete this post?</string>
+    <string name="dialog_delete_message">Do you really want to delete all the posts?</string>
+    <string name="dialog_delete_post_message">Do you really want to delete this post?</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_confirm">Ok</string>
 </resources>

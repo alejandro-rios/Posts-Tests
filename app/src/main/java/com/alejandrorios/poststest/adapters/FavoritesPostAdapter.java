@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class FavoritesPostAdapter extends RecyclerView.Adapter<FavoritesPostAdapter.FavoritesHolder> {
 	public interface Delegate {
@@ -98,19 +96,6 @@ public class FavoritesPostAdapter extends RecyclerView.Adapter<FavoritesPostAdap
 		public FavoritesHolder(final View itemView) {
 			super(itemView);
 			ButterKnife.bind(this, itemView);
-		}
-
-		public TextView getTxtFavorite() {
-			return txtFavorite;
-		}
-
-		public void setTxtFavorite(TextView txtFavorite) {
-			this.txtFavorite = txtFavorite;
-		}
-
-		@OnClick(R.id.postDelete)
-		void deletePost() {
-			Log.wtf("Adapter", "Click example");
 		}
 	}
 

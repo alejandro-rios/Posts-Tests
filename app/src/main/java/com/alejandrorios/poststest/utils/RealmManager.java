@@ -2,14 +2,11 @@ package com.alejandrorios.poststest.utils;
 
 import com.alejandrorios.poststest.models.PostRealm;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
-import io.realm.Sort;
 
 public class RealmManager {
 
@@ -30,7 +27,7 @@ public class RealmManager {
 	}
 
 	public List<PostRealm> getAll() {
-		final List<PostRealm> results = realm.where(PostRealm.class).sort("id", Sort.ASCENDING).findAll();
+		final List<PostRealm> results = realm.where(PostRealm.class).sort("id").findAll();
 
 		return realm.copyFromRealm(results);
 	}
@@ -44,7 +41,7 @@ public class RealmManager {
 	public <E extends RealmObject> void update(final E object) {
 		realm.executeTransaction(new Realm.Transaction() {
 			@Override
-			public void execute(@NotNull Realm realm) {
+			public void execute(Realm realm) {
 				realm.copyToRealmOrUpdate(object);
 			}
 		});
@@ -53,7 +50,7 @@ public class RealmManager {
 	public <E extends RealmObject> void updateList(final Iterable<E> objects) {
 		realm.executeTransaction(new Realm.Transaction() {
 			@Override
-			public void execute(@NotNull Realm realm) {
+			public void execute(Realm realm) {
 				realm.copyToRealmOrUpdate(objects);
 			}
 		});
@@ -62,7 +59,7 @@ public class RealmManager {
 	public <E extends RealmObject> void saveList(final Iterable<E> objects, final Class<E> clazz) {
 		realm.executeTransaction(new Realm.Transaction() {
 			@Override
-			public void execute(@NotNull Realm realm) {
+			public void execute(Realm realm) {
 				realm.copyToRealmOrUpdate(objects);
 			}
 		});
@@ -73,7 +70,7 @@ public class RealmManager {
 
 		realm.executeTransaction(new Realm.Transaction() {
 			@Override
-			public void execute(@NotNull Realm realm) {
+			public void execute(Realm realm) {
 				if (result == null) {
 					return;
 				}
@@ -88,7 +85,7 @@ public class RealmManager {
 
 		realm.executeTransaction(new Realm.Transaction() {
 			@Override
-			public void execute(@NotNull Realm realm) {
+			public void execute(Realm realm) {
 				if (results == null) {
 					return;
 				}

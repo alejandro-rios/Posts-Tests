@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.alejandrorios.poststest.R;
 import com.alejandrorios.poststest.models.PostRealm;
-import com.alejandrorios.poststest.utils.ConfirmationDialog;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 
@@ -31,7 +30,6 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.PostHold
 	private List<PostRealm> postList;
 	private RecyclerView recyclerView = null;
 	private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
-	private ConfirmationDialog dialog;
 	private Delegate delegate;
 
 	public AllPostAdapter(final Context context, final List<PostRealm> postList) {
@@ -73,12 +71,6 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.PostHold
 		holder.postDelete.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (dialog == null) {
-					dialog = new ConfirmationDialog(context);
-//					dialog.setDelegate(presenter);
-				}
-
-				dialog.show(R.string.dialog_delete_post_message);
 				TransitionManager.beginDelayedTransition(recyclerView);
 				delegate.deletePost(post);
 				postList.remove(position);
@@ -110,30 +102,6 @@ public class AllPostAdapter extends RecyclerView.Adapter<AllPostAdapter.PostHold
 		public PostHolder(final View itemView) {
 			super(itemView);
 			ButterKnife.bind(this, itemView);
-		}
-
-		public TextView getPostTitle() {
-			return postTitle;
-		}
-
-		public void setPostTitle(TextView postTitle) {
-			this.postTitle = postTitle;
-		}
-
-		public View getPostBadge() {
-			return postBadge;
-		}
-
-		public void setPostBadge(View postBadge) {
-			this.postBadge = postBadge;
-		}
-
-		public View getPostStar() {
-			return postStar;
-		}
-
-		public void setPostStar(View postStar) {
-			this.postStar = postStar;
 		}
 	}
 

@@ -13,4 +13,6 @@ public interface FavoritesPostsFragmentView {
 	void setupFavoritePostList(List<PostRealm> postList);
 
 	void showEmptyMsg(boolean show);
+
+	void updateFavorites();
 }

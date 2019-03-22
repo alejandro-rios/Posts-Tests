@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/favoriteDelete"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_gravity="center"
             android:clickable="true"
             android:contentDescription="@null"
@@ -45,9 +45,14 @@
                 android:paddingEnd="16dp"
                 android:paddingBottom="10dp"
                 android:text="@string/post_details_lorem"
-                android:textAllCaps="true"
                 android:textSize="18sp" />
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/silver" />
     </FrameLayout>
 </com.chauthai.swipereveallayout.SwipeRevealLayout>

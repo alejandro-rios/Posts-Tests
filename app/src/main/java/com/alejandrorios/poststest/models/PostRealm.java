@@ -1,9 +1,6 @@
 package com.alejandrorios.poststest.models;
 
-import com.alejandrorios.poststest.utils.RealmManager;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -67,10 +64,5 @@ public class PostRealm extends RealmObject {
 
 	public void setFavorite(boolean favorite) {
 		isFavorite = favorite;
-	}
-
-	public static List<PostRealm> getPostsInDatabase(){
-		return RealmManager.getInstance().getRealmInstance().where(PostRealm.class)
-				.findAll();
 	}
 }

@@ -1,13 +1,9 @@
 package com.alejandrorios.poststest.service.api;
 
-import android.util.Log;
-
-import com.alejandrorios.poststest.ui.postDetails.PostDetailsView;
 import com.alejandrorios.poststest.models.User;
 import com.alejandrorios.poststest.service.network.RetrofitProvider;
 import com.alejandrorios.poststest.service.network.RetrofitProviderImpl;
-
-import org.jetbrains.annotations.NotNull;
+import com.alejandrorios.poststest.ui.postDetails.PostDetailsView;
 
 import java.util.List;
 
@@ -20,17 +16,16 @@ public class GetUserData implements PostDetailsView.GetUserInteractor {
 	public void getUserData(final String userId, final OnFinishedListener onFinishedListener) {
 		final RetrofitProvider service = RetrofitProviderImpl.getRetrofitProvider().create(RetrofitProvider.class);
 		final Call<List<User>> call = service.getUserData(userId);
-		Log.wtf("URL Called", call.request().url() + "");
 
 		call.enqueue(new Callback<List<User>>() {
 			@Override
-			public void onResponse(@NotNull final Call<List<User>> call, @NotNull final Response<List<User>> response) {
+			public void onResponse(final Call<List<User>> call, final Response<List<User>> response) {
 				onFinishedListener.onFinishedUser(response.body());
 
 			}
 
 			@Override
-			public void onFailure(@NotNull final Call<List<User>> call, @NotNull final Throwable t) {
+			public void onFailure(final Call<List<User>> call, final Throwable t) {
 				onFinishedListener.onFailureUser(t);
 			}
 		});

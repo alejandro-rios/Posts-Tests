@@ -31,7 +31,6 @@ public class PostDetailsPresenter implements PostDetailsView.Presenter, PostDeta
 	@Override
 	public void markAsFavorite(final PostRealm post) {
 		post.setRead(false);
-		post.setFavorite(true);
 		RealmManager.getInstance().update(post);
 	}
 

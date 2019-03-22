@@ -1,14 +1,12 @@
 package com.alejandrorios.poststest.service.api;
 
-import android.util.Log;
-
-import com.alejandrorios.poststest.models.PostRealm;
-import com.alejandrorios.poststest.ui.allPosts.AllPostsFragmentView;
 import com.alejandrorios.poststest.models.Post;
+import com.alejandrorios.poststest.models.PostRealm;
 import com.alejandrorios.poststest.service.network.RetrofitProvider;
 import com.alejandrorios.poststest.service.network.RetrofitProviderImpl;
-
-import org.jetbrains.annotations.NotNull;
+import com.alejandrorios.poststest.ui.allPosts.AllPostsFragmentView;
+import com.google.common.collect.Ordering;
+import com.google.common.primitives.Ints;
 
 import java.util.List;
 
@@ -17,22 +15,30 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class GetPostList implements AllPostsFragmentView.GetPostInteractor {
+
+	private class OrderingById extends Ordering<Post> {
+		@Override
+		public int compare(Post s1, Post s2) {
+			return Ints.compare(Integer.parseInt(s1.getId()), Integer.parseInt(s2.getId()));
+		}
+	}
+
 	@Override
 	public void getPostList(final OnFinishedListener onFinishedListener) {
 		final RetrofitProvider service = RetrofitProviderImpl.getRetrofitProvider().create(RetrofitProvider.class);
 		final Call<List<Post>> call = service.getPostsList();
-		Log.wtf("URL Called", call.request().url() + "");
 
 		call.enqueue(new Callback<List<Post>>() {
 			@Override
-			public void onResponse(@NotNull final Call<List<Post>> call, @NotNull final Response<List<Post>> response) {
-				final List<PostRealm> realmPosts = Post.savePostsListToRealm(response.body());
-				onFinishedListener.onFinished(realmPosts);
+			public void onResponse(final Call<List<Post>> call, final Response<List<Post>> response) {
+				final List<Post> newPostList = new OrderingById().sortedCopy(response.body());
+				final List<PostRealm> realmPosts = Post.savePostsListToRealm(newPostList);
 
+				onFinishedListener.onFinished(realmPosts);
 			}
 
 			@Override
-			public void onFailure(@NotNull final Call<List<Post>> call, @NotNull final Throwable t) {
+			public void onFailure(final Call<List<Post>> call, final Throwable t) {
 				onFinishedListener.onFailure(t);
 			}
 		});

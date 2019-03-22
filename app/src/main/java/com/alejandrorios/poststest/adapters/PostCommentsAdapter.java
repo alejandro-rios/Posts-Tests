@@ -62,13 +62,5 @@ public class PostCommentsAdapter extends RecyclerView.Adapter<PostCommentsAdapte
 			super(itemView);
 			ButterKnife.bind(this, itemView);
 		}
-
-		public TextView getComment() {
-			return comment;
-		}
-
-		public void setComment(TextView comment) {
-			this.comment = comment;
-		}
 	}
 }

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -59,18 +58,21 @@ public class FavoritesPostsFragment extends Fragment implements FavoritesPostsFr
 	}
 
 	@Override
-	public void onStart() {
-		super.onStart();
-		presenter.getFavoritePosts();
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+		if (isVisibleToUser) {
+			presenter.getFavoritePosts();
+		}
 	}
 
 	@Override
 	public void setupFavoritePostList(final List<PostRealm> favoritesList) {
-		favoritesAdapter = new FavoritesPostAdapter(context, favoritesList);
 		final LinearLayoutManager llm = new LinearLayoutManager(context);
+
+		favoritesAdapter = new FavoritesPostAdapter(context, favoritesList);
+
 		llm.setOrientation(LinearLayoutManager.VERTICAL);
 		rvFavoritesList.setLayoutManager(llm);
-		rvFavoritesList.addItemDecoration(new DividerItemDecoration(context, LinearLayoutManager.VERTICAL));
 		rvFavoritesList.setAdapter(favoritesAdapter);
 		favoritesAdapter.setDelegate(presenter);
 	}
@@ -79,5 +81,10 @@ public class FavoritesPostsFragment extends Fragment implements FavoritesPostsFr
 	public void showEmptyMsg(final boolean show) {
 		rvFavoritesList.setVisibility(show ? View.GONE : View.VISIBLE);
 		favoritesEmpty.setVisibility(show ? View.VISIBLE : View.GONE);
+	}
+
+	@Override
+	public void updateFavorites() {
+		favoritesAdapter.notifyDataSetChanged();
 	}
 }

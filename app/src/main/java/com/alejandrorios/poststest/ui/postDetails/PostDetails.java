@@ -3,6 +3,7 @@ package com.alejandrorios.poststest.ui.postDetails;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -104,16 +105,30 @@ public class PostDetails extends AppCompatActivity implements PostDetailsView {
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_fav, menu);
+
+		if (postData.isFavorite()) {
+			menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_star_filled));
+		}
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		final int id = item.getItemId();
+		final String msg;
 
 		if (id == R.id.action_favorite) {
+			if (postData.isFavorite()) {
+				postData.setFavorite(false);
+				item.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_star_outline));
+				msg = "Unmarked as favorite";
+			} else {
+				postData.setFavorite(true);
+				item.setIcon(ContextCompat.getDrawable(this, R.drawable.ic_star_filled));
+				msg = "Marked as favorite";
+			}
 			presenter.markAsFavorite(postData);
-			Toast.makeText(this, "Marked as favorite", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 			return true;
 		}
 

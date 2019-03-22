@@ -1,7 +1,6 @@
 package com.alejandrorios.poststest.ui.postDetails;
 
 import com.alejandrorios.poststest.models.Comment;
-import com.alejandrorios.poststest.models.Post;
 import com.alejandrorios.poststest.models.PostRealm;
 import com.alejandrorios.poststest.models.User;
 

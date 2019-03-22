@@ -26,6 +26,7 @@ public class AllPostsFragmentPresenter implements AllPostsFragmentView.Presenter
 
 	@Override
 	public void getPostList() {
+		view.showMsg(false);
 		view.showProgress(true);
 		final List<PostRealm> allPosts = RealmManager.getInstance().getAll();
 
@@ -49,6 +50,7 @@ public class AllPostsFragmentPresenter implements AllPostsFragmentView.Presenter
 	public void onFailure(final Throwable t) {
 		if (view != null) {
 			view.showProgress(false);
+			view.showMsg(true);
 		}
 	}
 
@@ -69,11 +71,18 @@ public class AllPostsFragmentPresenter implements AllPostsFragmentView.Presenter
 	@Override
 	public void deletePost(final PostRealm post) {
 		RealmManager.getInstance().delete(post.getId());
+		view.updatePostList();
+	}
+
+	@Override
+	public void deleteAllPost() {
+		RealmManager.getInstance().deleteAll();
+		view.clearPosts();
+		view.showMsg(true);
 	}
 
 	@Override
 	public void confirm() {
-		RealmManager.getInstance().deleteAll();
-		view.clearPosts();
+		deleteAllPost();
 	}
 }

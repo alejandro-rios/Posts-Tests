@@ -25,10 +25,10 @@ public class FavoritesPostsFragmentPresenter implements FavoritesPostsFragmentVi
 	public void getFavoritePosts() {
 		final List<PostRealm> favoritePosts = RealmManager.getInstance().getFavorites();
 
-		if(favoritePosts != null){
+		if (favoritePosts.size() > 0) {
 			view.showEmptyMsg(false);
 			view.setupFavoritePostList(favoritePosts);
-		}else{
+		} else {
 			view.showEmptyMsg(true);
 		}
 	}
@@ -47,5 +47,6 @@ public class FavoritesPostsFragmentPresenter implements FavoritesPostsFragmentVi
 	@Override
 	public void deleteFavorite(final PostRealm post) {
 		RealmManager.getInstance().delete(post.getId());
+		view.updateFavorites();
 	}
 }

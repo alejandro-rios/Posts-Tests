@@ -1,6 +1,7 @@
 package com.alejandrorios.poststest.ui;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
 	@BindView(R.id.toolbar)
 	Toolbar toolbar;
@@ -29,6 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
 	@BindView(R.id.tabsMain)
 	TabLayout tabsMain;
+
+	@BindView(R.id.fabDelete)
+	FloatingActionButton fabDelete;
+
+	public FloatingActionButton getFabDelete() {
+		return fabDelete;
+	}
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
@@ -40,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 		setUpViewPager(vpMain);
 
 		tabsMain.setupWithViewPager(vpMain);
+		vpMain.addOnPageChangeListener(this);
 	}
 
 	private void setUpViewPager(final ViewPager vpMain) {
@@ -49,11 +58,34 @@ public class MainActivity extends AppCompatActivity {
 		vpMain.setAdapter(adapter);
 	}
 
+	@Override
+	public void onPageScrolled(int i, float v, int i1) {
+
+	}
+
+	@Override
+	public void onPageSelected(int position) {
+		switch (position) {
+			case 0:
+				fabDelete.show();
+				break;
+
+			default:
+				fabDelete.hide();
+				break;
+		}
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int i) {
+
+	}
+
 	class ViewPagerAdapter extends FragmentPagerAdapter {
 		private final List<Fragment> mFragmentList = new ArrayList<>();
 		private final List<String> mFragmentTitleList = new ArrayList<>();
 
-		public ViewPagerAdapter(FragmentManager manager) {
+		public ViewPagerAdapter(final FragmentManager manager) {
 			super(manager);
 		}
 
@@ -67,13 +99,13 @@ public class MainActivity extends AppCompatActivity {
 			return mFragmentList.size();
 		}
 
-		public void addFragment(Fragment fragment, String title) {
+		public void addFragment(final Fragment fragment, final String title) {
 			mFragmentList.add(fragment);
 			mFragmentTitleList.add(title);
 		}
 
 		@Override
-		public CharSequence getPageTitle(int position) {
+		public CharSequence getPageTitle(final int position) {
 			return mFragmentTitleList.get(position);
 		}
 	}

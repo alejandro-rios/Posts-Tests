@@ -6,5 +6,7 @@
 
     <color name="redButton">#D32F2F</color>
     <color name="badgeColor">#06A6E4</color>
-    <color name="silver">#CCCCCC</color>
+    <color name="silver">#AAAAAA</color>
+    <color name="silver_back">#CCCCCC</color>
+    <color name="silver_title">#424242</color>
 </resources>
