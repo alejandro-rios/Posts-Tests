@@ -41,3 +41,5 @@ The app uses this libraries:
 
   - App logo taken from this source: http://chittagongit.com/icon/posts-icon-13.html
   - Maybe the MVP pasive structure breaks(design not functionality, the app runs ok) because the `FloatingButton` used in `MainActivity.class`.
+  
+  ![Sample Video](https://youtu.be/JtIgiycjWJ8)
